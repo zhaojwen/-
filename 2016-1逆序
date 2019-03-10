@@ -1,0 +1,41 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<cmath>
+#define max 100
+
+
+int main(){
+	int num;
+	scanf("%d",&num);
+//	int rnum=reverse(num);
+	//printf("%d",rnum);
+    int ynum=num;
+	int a[max];
+	int i=0;
+	int renum=0;
+	while(1){
+		a[i]=num%10;
+		num=num/10;
+		i++;
+		if(num==0){
+			break;
+		}
+	}
+	for(int j=i-1;j>=0;j--){
+		renum=renum+pow(10,i-1-j)*a[j];
+	}
+	if(a[0]!=0){
+		if(renum%ynum==0){
+			printf("%d*%d=%d\n",ynum,renum/ynum,renum);
+		}else{
+			printf("%d %d\n",ynum,renum);
+		}
+	}else{
+		printf("%d ",ynum);
+		for(int s=0;s<i;s++){
+			printf("%d",a[s]);
+		}
+		printf("\n");
+	}
+
+}
