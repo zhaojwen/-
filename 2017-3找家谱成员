@@ -1,0 +1,161 @@
+#include<stdlib.h>
+#include<stdio.h>
+#include<string>
+#include<iostream>
+#include<sstream>
+#include<queue>
+#include<algorithm>
+#include<cmath>
+using namespace std;
+
+typedef struct node{
+	string name;
+	int layer;
+	struct node *lchild,*rchild;
+}node;
+
+node Node[100];
+int size=0;
+
+node* creatNode(string str){
+	node* p=&Node[size];
+	p->lchild=NULL;
+	p->name=str;
+	p->rchild=NULL;
+	size++;
+	return p;
+}
+
+void layerOrder(node *root){
+	queue<node*> q;
+	root->layer=1;
+	q.push(root);
+	while(!q.empty()){
+		root=q.front();
+		q.pop();
+		if(root->lchild!=NULL){
+			q.push(root->lchild);
+			root->lchild->layer=root->layer+1;
+		}
+		if(root->rchild!=NULL){
+			q.push(root->rchild);
+			root->rchild->layer=root->layer+1;
+		}
+	}
+
+	
+}
+
+int main(){
+	char c[100];
+	int layer1=1,layer2=1;
+	bool flag2=true;//找共同父节点时用
+	while(gets(c)){
+		stringstream ss(c);
+		string s[3];//存三个名字
+		for(int i=0;i<3;i++){
+			ss>>s[i];
+		}
+		if(s[2]!=""){
+			if(size==0){
+				node *root=creatNode(s[0]);
+				root->lchild=creatNode(s[1]);
+				root->rchild=creatNode(s[2]);
+			}else{
+				int j;
+				bool flag=false;
+				int line=size;
+				for(j=0;j<line;j++){
+					if(Node[j].name==s[0]){
+						Node[j].lchild=creatNode(s[1]);
+						Node[j].rchild=creatNode(s[2]);
+						//cout<<"22+++++++++++++++++++++++++";
+						flag=true;
+					}
+					if(Node[j].name==s[1]){
+						node *root=creatNode(s[0]);
+						root->lchild=&Node[j];
+						root->rchild=creatNode(s[2]);
+						flag=true;
+					}
+					if(Node[j].name==s[2]){
+						node *root=creatNode(s[0]);
+						root->lchild=creatNode(s[1]);
+						root->rchild=&Node[j];
+						flag=true;
+					}
+				}
+				if(flag==false){
+						node *root=creatNode(s[0]);	
+						root->lchild=creatNode(s[1]);
+						root->rchild=creatNode(s[2]);
+				}
+			}
+		}else{
+			node *p1,*p2;
+			layerOrder(&Node[0]);
+			for(int a=0;a<size;a++){
+				if(Node[a].name==s[0]){
+					p1=&Node[a];
+				}
+			}
+			for(int b=0;b<size;b++){
+				if(Node[b].name==s[1]){
+					p2=&Node[b];
+				}
+			}
+			cout<<p1->layer<<p2->layer<<endl;
+			//break;
+			int deepth=(p1->layer)-(p2->layer);
+			if(deepth>=0){
+				for (int d=0;d<deepth;d++){
+					for(int s=0;s<size;s++){
+						if((Node[s].lchild->name==p1->name)||(Node[s].rchild->name==p1->name)){
+							p1=&Node[s];
+							break;
+						}
+					}
+				}
+			}else{
+				for (int e=0;e<abs(deepth);e++){
+					for(int r=0;r<size;r++){
+						if((Node[r].lchild->name==p2->name)||(Node[r].rchild->name==p2->name)){
+							p2=&Node[r];
+							break;
+							
+						}
+					}
+				}
+				
+			}
+			if(p1==p2) flag2=false;//就不用进入以下的循环了
+			while(flag2){
+			
+				for(int t=0;t<size;t++){
+					if((Node[t].lchild->name==p1->name)||(Node[t].rchild->name==p1->name)){
+						p1=&Node[t];
+						
+						break;
+					}
+				}
+				for(int y=0;y<size;y++){
+					if((Node[y].lchild->name==p2->name)||(Node[y].rchild->name==p2->name)){
+						p2=&Node[y];
+						
+						break;
+					}
+				}
+				if(p1==p2) {
+					flag2=false;
+
+				}
+				
+			}
+			
+			cout<<p1->name;
+		}
+		
+		
+	}
+	return 0;
+}
