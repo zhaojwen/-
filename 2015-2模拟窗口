@@ -1,0 +1,55 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<vector>
+#include<iostream>
+using namespace std;
+#define max 1001
+
+typedef struct chuang{
+	int id;
+	int x1,y1;
+	int x2,y2;
+}win;
+
+win windows[100];
+win tmpWin;
+void main(){
+	int winNum;
+	int clickNum;
+	int c[max][2];
+	scanf("%d",&winNum);
+	for(int i=0;i<winNum;i++){
+		scanf("%d%d%d%d%d",&windows[i].id,&windows[i].x1,&windows[i].y1,&windows[i].x2,&windows[i].y2);
+	//	printf("%d%d%d%d%d",windows[i].id,windows[i].x1,windows[i].y1,windows[i].x2,windows[i].y2);
+	}
+	scanf("%d",&clickNum);
+	for(int j=0;j<clickNum;j++){
+		scanf("%d%d",&c[j][0],&c[j][1]);
+	}
+	//cout<<c[0][0]<<c[0][1]<<endl;
+	vector<win> array(winNum);
+	//cout<<windows[0].id<<endl;
+	for(int k=0;k<winNum;k++){
+		array[k]=windows[k];
+	}
+	for(int o=0;o<clickNum;o++){
+		for(int l=0;l<winNum;l++){
+		//	cout<<"1111111111";
+		//	cout<<c[o][0]<<"   "<<c[o][1]<<"  "<<array[l].x1<<"  "<<array[l].x2<<endl;
+			if((c[o][0]>=array[l].x2)&&(c[o][0]<=array[l].x1)&&(c[o][1]>=array[l].y1)&&(c[o][1]<=array[l].y2)){
+			//	cout<<"22222222222";
+				tmpWin=array[l];
+				for(int g=l;g>0;g--){
+					array[g]=array[g-1];
+				}
+				array[0]=tmpWin;
+				//cout<<array[0].id<<endl;
+				break;
+			}
+		}
+	}
+	//printf("%d\n",array[0].x1);
+	for(int ii=0;ii<winNum;ii++){
+		printf("%d ",array[ii].id);
+	}
+}
