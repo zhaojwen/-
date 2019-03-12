@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void main(){
+	int a,b;
+	int ia=1,ib=1;
+	int f[1001],s[1001];
+	f[0]=1;
+	s[0]=1;
+	int suma=0;
+	int sumb=0;
+	scanf("%d,%d",&a,&b);//这里竟然是什么格式，如逗号，输入就按照逗号隔开，注意在英文半角下，有事执行时键盘会自动切到中文下
+	for(int i=2;i<=(a/2);i++){
+		if(a%i==0){
+			f[ia]=i;
+			ia++;
+		}
+	}
+	for(int j=2;j<=(b/2);j++){
+		if(b%j==0){
+			s[ib]=j;
+			ib++;
+		}
+	}
+	printf("%d,",a);
+	for(int k=0;k<ia-1;k++){
+		suma=suma+f[k];
+		printf("%d+",f[k]);
+	}
+	suma=suma+f[ia-1];
+	printf("%d=%d\n",f[ia-1],suma);
+	printf("%d,",b);
+	for(int v=0;v<ib-1;v++){
+		sumb=sumb+s[v];
+		printf("%d+",s[v]);
+	}
+	sumb=sumb+s[ib-1];
+	printf("%d=%d\n",s[ib-1],sumb);
+	if(suma==b&&sumb==a){
+		printf("1\n");
+	}else{
+		printf("0\n");
+	}
+}
