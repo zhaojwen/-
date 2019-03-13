@@ -1,0 +1,46 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<map>
+#include<sstream>
+#include<cstring>
+#include<ctype.h>
+#include<iostream>
+using namespace std;
+#define max 1001
+
+void main(){
+	string word[100];
+	char c[max];
+	FILE *fp=fopen("j.txt","r");
+	int i=0;
+	while(!feof(fp)){
+		fscanf(fp,"%c",&c[i]);
+		i++;
+		//cout<<c[i-1];
+	}
+	for(int j=0;j<i;j++){
+		if(ispunct(c[j])){
+			c[j]=' ';
+		}
+	//	cout<<c[j]<<endl;
+	}
+	stringstream ss(c);
+	int k=0;
+	do{
+		ss>>word[k];
+		k++;
+		//cout<<word[0]<<endl;
+	}while(word[k-1]!="");
+	//cout<<k<<endl;
+	map<string,int> mp;
+	for(int v=0;v<k-2;v++){//这里为什么到k-3还是不理解，如果直接以字母结束为k-2，如果字母末尾多一个空格则为k-3
+	//cout<<word[v]<<endl;
+		mp.insert(make_pair(word[v],v));
+	}
+	//cout<<"fffffffff";
+	map<string,int>::iterator it;
+	for(it=mp.begin();it!=mp.end();it++){
+		printf("%s ",it->first.c_str());//将字符串转换为字符串数组
+	}
+	//cout<<"1fffffffff";
+}
