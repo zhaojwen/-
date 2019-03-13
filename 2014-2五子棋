@@ -1,0 +1,103 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void main(){
+	int q[19][19];
+	bool flag=false;
+	int x,y,zhi;
+	freopen("j.txt","r",stdin);
+	for(int i=0;i<19;i++){
+		for(int j=0;j<19;j++){
+			scanf("%d",&q[i][j]);
+		}
+	}
+	for(int i1=0;i1<19;i1++){//横向判断
+		for(int j1=0;j1<15;j1++){
+			flag=true;
+			if(q[i1][j1]==0){
+				flag=false;
+			}
+			for(int a1=1;a1<5;a1++){
+				if((q[i1][j1]!=0)&&(q[i1][j1]!=q[i1][j1+a1])){
+					flag=false;
+					break;
+				}
+			}
+			if(flag){
+				x=i1;
+				y=j1;
+				zhi=q[i1][j1];
+				break;
+			}
+		}
+		if(flag) break;
+	}
+	for(int i2=0;i2<19;i2++){//纵向判断
+		for(int j2=0;j2<15;j2++){
+			flag=true;
+			if(q[j2][i2]==0){
+				flag=false;
+			}
+			for(int a2=1;a2<5;a2++){
+				if((q[j2][i2]!=0)&&(q[j2][i2]!=q[j2+a2][i2])){
+					flag=false;
+					break;
+				}
+			}
+			if(flag){
+				x=j2;
+				y=i2;
+				zhi=q[j2][i2];
+				break;
+			}
+		}
+		if(flag) break;
+	}
+	for(int i3=0;i3<15;i3++){//左上到右下
+		for(int j3=0;j3<15;j3++){
+			flag=true;
+			if(q[i3][j3]==0){
+				flag=false;
+			}
+			for(int a3=1;a3<5;a3++){
+				if((q[i3][j3]!=0)&&(q[i3][j3]!=q[i3+a3][j3+a3])){
+					flag=false;
+					break;
+				}
+			}
+			if(flag){
+				x=i3;
+				y=j3;
+				zhi=q[i3][j3];
+				break;
+			}
+		}
+		if(flag) break;
+	}
+	for(int i4=4;i4<19;i4++){
+		for(int j4=4;j4<19;j4++){
+			flag=true;
+			if(q[i4][j4]==0){
+				flag=false;
+			}
+			for(int a4=1;a4<5;a4++){
+				if((q[i4][j4]!=0)&&(q[i4][j4]!=q[i4+a4][j4-a4])){
+					flag=false;
+					break;
+				}
+			}
+			if(flag){
+				x=i4;
+				y=j4;
+				zhi=q[i4][j4];
+				break;
+			}
+		}
+		if(flag) break;
+	}
+	if(flag){
+		printf("%d:\n%d %d",zhi,x,y);
+	}else{
+		printf("no");
+	}
+}
