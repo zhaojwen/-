@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<cstring>
+#include<iostream>
+using namespace std;
+
+void main(){
+	char c[50][100];
+	int local;
+	scanf("%d",&local);
+	freopen("1.txt","r",stdin);//重定向输入
+	int i=0;
+	while(gets(c[i])!=NULL){//gets中的参数是字符串数组
+		i++;
+	}
+	for(int j=0;j<i;j++){
+		int zong=0,wei=0;
+		while(c[j][zong]!=NULL){
+			zong++;
+			if(c[j][zong-1]==':'){
+				wei=zong-1;
+			}
+			
+		}
+		char b1[100];
+		int b1j=0;
+		int b2j=0;
+		bool flag1=false;
+		bool flag2=false;
+		for(int v1=wei-1;v1>=0;v1--){
+			if((c[j][v1]!=' ')&&(c[j][v1]!='\t')){
+				b1[b1j]=c[j][v1];
+				b1j++;
+				flag1=true;
+			}else if(flag1){
+				b1[b1j]=' ';
+				b1j++;
+				flag1=false;
+			}
+		}
+		for(int v11=b1j;v11<local-1;v11++){
+			b1[v11]=' ';
+		}
+
+		for(int v111=local-2;v111>=0;v111--){
+			printf("%c",b1[v111]);
+
+		}
+		printf(" : ");
+		for(int v2=wei+1;v2<zong;v2++){
+			if((c[j][v2]!=' ')&&(c[j][v2]!='\t')){
+				printf("%c",c[j][v2]);
+				flag2=true;
+			}else if(flag2){
+				printf(" ");
+				flag2=false;
+			}
+		}
+		printf("\n");
+		
+	}
+
+
+}
